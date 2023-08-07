@@ -5,11 +5,7 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 require("dotenv").config();
 
-const { JWT_SECRET, BASE_URL } = process.env;
-const prodDir = "https://db-phonebook-olo8.onrender.com";
-let dir;
-
-if (process.env.NODE_ENV === "production") dir = prodDir; else dir = BASE_URL;
+const { JWT_SECRET } = process.env;
 
 const registerUser = async (req, res, next) => {
   try {
