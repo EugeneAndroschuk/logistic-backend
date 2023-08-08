@@ -26,9 +26,13 @@ module.exports = (passport) => {
               id: existingUser._id,
             };
             const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-            const updatedUser = await User.findByIdAndUpdate(existingUser._id, {
-              token,
-            });
+            const updatedUser = await User.findByIdAndUpdate(
+              existingUser._id,
+              {
+                token,
+              },
+              { new: true }
+            );
 
             return done(null, updatedUser);
             }
@@ -46,9 +50,13 @@ module.exports = (passport) => {
             };
             const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
 
-            const updatedNewUser = await User.findByIdAndUpdate(newUser._id, {
-              token,
-            });
+            const updatedNewUser = await User.findByIdAndUpdate(
+              newUser._id,
+              {
+                token,
+              },
+              { new: true }
+            );
 
           return done(null, updatedNewUser);
         } catch (error) {
