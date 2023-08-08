@@ -7,12 +7,13 @@ const authenticate = async (req, res, next) => {
     const { authorization = "" } = req.headers;
     const [bearer, token] = authorization.split(" ");
 
-    if (bearer !== "Bearer") next(HttpError(401, "Not authorized"));
+    if (bearer !== "Bearer") next(HttpError(401, "Not authorized - no Bearer"));
     try { 
         const { id } = jwt.verify(token, JWT_SECRET);
+        console.log(id);
         const user = await User.findById(id);
     
-        if (!user || !user.token || user.token !== token) next(HttpError(401, "Not authorized"));
+        if (!user || !user.token || user.token !== token) next(HttpError(401, "Not authorized - no token"));
         
         req.user = user;
         next();
