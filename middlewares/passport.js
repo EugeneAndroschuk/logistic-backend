@@ -21,18 +21,22 @@ module.exports = (passport) => {
             email: profile.email,
           });
 
-          const payload = {
-            id: existingUser._id,
-          };
-          const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-
           if (existingUser) {
+            const payload = {
+              id: existingUser._id,
+            };
+            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
             const updatedUser = await User.findByIdAndUpdate(existingUser._id, {
               token,
             });
 
             return done(null, updatedUser);
-          }
+            }
+            
+             const payload = {
+               id: profile.email,
+             };
+             const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
 
           const newUser = await User.create({
             email: profile.email,
