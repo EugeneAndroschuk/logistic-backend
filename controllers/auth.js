@@ -5,7 +5,13 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 require("dotenv").config();
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, FRONTEND_URL } = process.env;
+
+const googleAuth = (req, res) => {
+  const url = `${FRONTEND_URL}?token=${req.user.token}`;
+
+  res.redirect(url);
+};
 
 const registerUser = async (req, res, next) => {
   try {
@@ -103,4 +109,5 @@ module.exports = {
   loginUser,
   logoutUser,
   getCurrentUser,
+  googleAuth,
 };
