@@ -22,7 +22,7 @@ const userSchema = new Schema(
     token: String,
     avatarURL: String,
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: false }
 );
 
 const User = model("user", userSchema);
