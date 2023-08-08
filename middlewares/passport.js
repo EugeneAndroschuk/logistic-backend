@@ -34,15 +34,16 @@ module.exports = (passport) => {
             }
             
              const payload = {
-               id: profile.email,
+               id: profile.id,
              };
              const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
 
-          const newUser = await User.create({
-            email: profile.email,
-            name: profile.displayName,
-            token,
-          });
+            const newUser = await User.create({
+              googleId: profile.id,
+              email: profile.email,
+              name: profile.displayName,
+              token,
+            });
 
           return done(null, newUser);
         } catch (error) {

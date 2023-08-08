@@ -8,7 +8,10 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, "Set password for user"],
+      required: function () {
+        this.googleId ? false : true;
+      },
+      default: "",
     },
     email: {
       type: String,
@@ -21,6 +24,7 @@ const userSchema = new Schema(
     },
     token: String,
     avatarURL: String,
+    googleId: { type: String, default: "" },
   },
   { versionKey: false, timestamps: false }
 );
