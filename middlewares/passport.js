@@ -33,19 +33,24 @@ module.exports = (passport) => {
             return done(null, updatedUser);
             }
             
-             const payload = {
-               id: profile.id,
-             };
-             const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
+             
 
             const newUser = await User.create({
               googleId: profile.id,
               email: profile.email,
               name: profile.displayName,
+            });
+
+            const payload = {
+              id: newUser._id,
+            };
+            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
+
+            const updatedNewUser = await User.findByIdAndUpdate(newUser._id, {
               token,
             });
 
-          return done(null, newUser);
+          return done(null, updatedNewUser);
         } catch (error) {
           return done(error, false);
         }
