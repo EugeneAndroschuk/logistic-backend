@@ -8,9 +8,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: function () {
-        this.googleId ? false : true;
-      },
+      required: !this.googleId,
       default: "",
     },
     email: {

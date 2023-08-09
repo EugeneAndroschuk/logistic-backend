@@ -1,5 +1,5 @@
-const authJoiSchemas = require("./authJoiSchemas");
-const contactsJoiSchemas = require("./contactsJoiSchemas");
+const authJoiSchemas = require("../schemas/authJoiSchemas");
+const contactsJoiSchemas = require("../schemas/contactsJoiSchemas");
 const HttpError = require("./HttpError");
 const updateStatusContact = require("./updateStatusContact ");
 

@@ -1,5 +1,6 @@
 const { User } = require("../models");
-const { authJoiSchemas, HttpError } = require("../utils");
+const { HttpError } = require("../utils");
+const {authJoiSchemas} = require("../schemas")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
