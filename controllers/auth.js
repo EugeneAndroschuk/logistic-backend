@@ -9,7 +9,6 @@ require("dotenv").config();
 const { JWT_SECRET, FRONTEND_URL } = process.env;
 
 const googleAuth = (req, res) => {
-  console.log(req.user)
   const url = `${FRONTEND_URL}/auth?token=${req.user.token}`;
 
   res.redirect(url);

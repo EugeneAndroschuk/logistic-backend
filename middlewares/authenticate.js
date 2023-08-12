@@ -10,10 +10,7 @@ const authenticate = async (req, res, next) => {
     if (bearer !== "Bearer") next(HttpError(401, "Not authorized - no Bearer"));
     try { 
         const { id } = jwt.verify(token, JWT_SECRET);
-        console.log(id);
         const user = await User.findById(id);
-        console.log(token)
-        console.log(user.token);
     
         if (!user || !user.token || user.token !== token) next(HttpError(401, "Not authorized - no token"));
         
