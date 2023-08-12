@@ -2,15 +2,11 @@ const Joi = require("joi").extend(require("@joi/date"));;
 
 const addDriveSchema = Joi.object({
   shipmentDate: Joi.date()
-    // .utc()
-    // .format("DD.MM.YYYY")
-    .greater("1-1-2022")
+    .min("1-1-2022")
     .max(new Date())
     .required(),
   unloadingDate: Joi.date()
-    // .utc()
-    // .format("DD.MM.YYYY")
-    .greater("1-1-2022")
+    .min("1-1-2022")
     .max(new Date())
     .required(),
   carrier: Joi.string().required(),

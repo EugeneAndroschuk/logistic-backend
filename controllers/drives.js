@@ -44,7 +44,7 @@ const removeDriveById = async (req, res, next) => {
       const removedDrive = await Drive.findByIdAndDelete(driveId);
       if (!removedDrive) throw HttpError(404, "Not found");
 
-      res.status(200).json({ message: "drive deleted" });
+      res.status(200).json(removedDrive);
   } catch (error) {
     next(error);
   }
