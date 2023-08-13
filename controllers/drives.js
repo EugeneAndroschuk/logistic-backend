@@ -15,8 +15,10 @@ const getAllDrives = async (req, res, next) => {
 const getDrivesByQuery = async (req, res, next) => {
   try {
     const { dateFrom, dateTill } = req.query;
-    console.log(dateFrom);
-    console.log(dateTill);
+    const dateFromIso = (new Date(dateFrom)).toISOString();
+    const dateTillIso = (new Date(dateTill)).toISOString();
+    console.log(dateFromIso);
+    console.log(dateTillIso);
     const filterOptions = {
       $and: [
         {
@@ -32,8 +34,8 @@ const getDrivesByQuery = async (req, res, next) => {
       ],
     };
     const allDrives = await Drive.find({
-      shipmentDate: { $gte: dateFrom, },
-      unloadingDate: {$lte: dateTill,},
+      shipmentDate: { $gte: dateFromIso },
+      unloadingDate: { $lte: dateTillIso },
     }).populate("owner", "name");
     res.status(200).json(allDrives);
   } catch (error) {
