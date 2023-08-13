@@ -20,12 +20,12 @@ const getDrivesByQuery = async (req, res, next) => {
     const filterOptions = {
       $and: [
         {
-          dateFrom: {
+          shipmentDate: {
             $gte: dateFrom,
           },
         },
         {
-          dateTill: {
+          unloadingDate: {
             $lte: dateTill,
           },
         },
