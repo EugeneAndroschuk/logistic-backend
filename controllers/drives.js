@@ -12,6 +12,40 @@ const getAllDrives = async (req, res, next) => {
   }
 };
 
+const getDrivesByQuery = async (req, res, next) => {
+  try {
+    const { dateFrom, dateTill } = req.query;
+    const filterOptions = {
+      $and: [
+        {
+          dateFrom: {
+            $gte: Date(dateFrom),
+          },
+        },
+        {
+          dateTill: {
+            $lte: Date(dateTill),
+          },
+        },
+      ],
+    };
+    const allDrives = await Drive.find({ ...filterOptions }).populate(
+      "owner",
+      "name"
+    );
+    res.status(200).json(allDrives);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// db.sales.find({
+//   day: {
+//     $gt: ISODate(" 2020-01-21 "),
+//     $lt: ISODate(" 2020-01-24 "),
+//   },
+// });
+
 const getDriveById = async (req, res, next) => {
   try {
     const { driveId } = req.params;
@@ -70,6 +104,7 @@ const updateDriveById = async (req, res, next) => {
 
 module.exports = {
   getAllDrives,
+  getDrivesByQuery,
   getDriveById,
   addDrive,
   removeDriveById,
