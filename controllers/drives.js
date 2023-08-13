@@ -31,10 +31,7 @@ const getDrivesByQuery = async (req, res, next) => {
         },
       ],
     };
-    const allDrives = await Drive.find(filterOptions).populate(
-      "owner",
-      "name"
-    );
+    const allDrives = await Drive.find({ shipmentDate: { $lte: dateTill,}}).populate("owner", "name");
     res.status(200).json(allDrives);
   } catch (error) {
     next(error);
