@@ -31,7 +31,7 @@ const getDrivesByQuery = async (req, res, next) => {
         },
       ],
     };
-    const allDrives = await Drive.find({ ...filterOptions }).populate(
+    const allDrives = await Drive.find(filterOptions).populate(
       "owner",
       "name"
     );
