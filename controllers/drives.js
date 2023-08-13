@@ -1,11 +1,10 @@
-
 const { Drive } = require("../models");
 const { drivesJoiSchemas } = require("../schemas");
 const { HttpError } = require("../utils");
 
 const getAllDrives = async (req, res, next) => {
   try {
-    const allDrives = await Drive.find().populate('owner', 'name');
+    const allDrives = await Drive.find().populate("owner", "name");
     res.status(200).json(allDrives);
   } catch (error) {
     next(error);
@@ -15,28 +14,23 @@ const getAllDrives = async (req, res, next) => {
 const getDrivesByQuery = async (req, res, next) => {
   try {
     const { dateFrom, dateTill } = req.query;
-    const dateFromIso = (new Date(dateFrom)).toISOString();
-    const dateTillIso = (new Date(dateTill)).toISOString();
-    console.log(dateFromIso);
-    console.log(dateTillIso);
-    const filterOptions = {
-      $and: [
-        {
-          shipmentDate: {
-            $gte: dateFrom,
-          },
-        },
-        {
-          unloadingDate: {
-            $lte: dateTill,
-          },
-        },
-      ],
-    };
-    const allDrives = await Drive.find({
-      shipmentDate: { $gte: dateFromIso },
-      unloadingDate: { $lte: dateTillIso },
-    }).populate("owner", "name");
+    const filterOptions = dateFrom
+      ? {
+          shipmentDate: { $gte: new Date(dateFrom).toISOString() },
+          unloadingDate: { $lte: new Date(dateTill).toISOString() },
+        }
+      : {};
+    // if (dateFrom) {
+    //   const dateFromIso = new Date(dateFrom).toISOString();
+    //   const dateTillIso = new Date(dateTill).toISOString();
+
+    //   const newFilterOptions = {
+    //     shipmentDate: { $gte: new Date(dateFrom).toISOString() },
+    //     unloadingDate: { $lte: new Date(dateTill).toISOString() },
+    //   };
+    // }
+
+    const allDrives = await Drive.find(filterOptions).populate("owner", "name");
     res.status(200).json(allDrives);
   } catch (error) {
     next(error);
@@ -63,44 +57,44 @@ const getDriveById = async (req, res, next) => {
 };
 
 const addDrive = async (req, res, next) => {
-    try {
-      const { _id } = req.user;
+  try {
+    const { _id } = req.user;
     //   const { name, email, phone } = req.body;
-      const { error } = drivesJoiSchemas.addDriveSchema.validate(req.body);
-      if (error) throw HttpError(400, "missing required name field");
+    const { error } = drivesJoiSchemas.addDriveSchema.validate(req.body);
+    if (error) throw HttpError(400, "missing required name field");
 
-      const addedDrive = await Drive.create({ ...req.body, owner: _id });
-      res.status(201).json(addedDrive);
+    const addedDrive = await Drive.create({ ...req.body, owner: _id });
+    res.status(201).json(addedDrive);
   } catch (error) {
     next(error);
   }
 };
 
 const removeDriveById = async (req, res, next) => {
-    try {
-      const { driveId } = req.params;
-      const removedDrive = await Drive.findByIdAndDelete(driveId);
-      if (!removedDrive) throw HttpError(404, "Not found");
+  try {
+    const { driveId } = req.params;
+    const removedDrive = await Drive.findByIdAndDelete(driveId);
+    if (!removedDrive) throw HttpError(404, "Not found");
 
-      res.status(200).json(removedDrive);
+    res.status(200).json(removedDrive);
   } catch (error) {
     next(error);
   }
 };
 
 const updateDriveById = async (req, res, next) => {
-    try {
+  try {
     //   const { name, email, phone } = req.body;
-      const { error } = drivesJoiSchemas.addDriveSchema.validate(req.body);
-      if (error) throw HttpError(400, "missing fields");
+    const { error } = drivesJoiSchemas.addDriveSchema.validate(req.body);
+    if (error) throw HttpError(400, "missing fields");
 
-      const { driveId } = req.params;
-      const updatedDrive = await Drive.findByIdAndUpdate(driveId, req.body, {
-        new: true,
-      });
-      if (!updatedDrive) throw HttpError(404, "Not found");
+    const { driveId } = req.params;
+    const updatedDrive = await Drive.findByIdAndUpdate(driveId, req.body, {
+      new: true,
+    });
+    if (!updatedDrive) throw HttpError(404, "Not found");
 
-      res.status(200).json(updatedDrive);
+    res.status(200).json(updatedDrive);
   } catch (error) {
     next(error);
   }
