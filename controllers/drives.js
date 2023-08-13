@@ -15,16 +15,18 @@ const getAllDrives = async (req, res, next) => {
 const getDrivesByQuery = async (req, res, next) => {
   try {
     const { dateFrom, dateTill } = req.query;
+    console.log(dateFrom);
+    console.log(dateTill);
     const filterOptions = {
       $and: [
         {
           dateFrom: {
-            $gte: Date(dateFrom),
+            $gte: dateFrom,
           },
         },
         {
           dateTill: {
-            $lte: Date(dateTill),
+            $lte: dateTill,
           },
         },
       ],
