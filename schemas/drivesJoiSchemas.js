@@ -1,4 +1,4 @@
-const Joi = require("joi").extend(require("@joi/date"));
+const Joi = require("joi");
 
 // .format("DD-MM-YYYY").utc()
 const addDriveSchema = Joi.object({
