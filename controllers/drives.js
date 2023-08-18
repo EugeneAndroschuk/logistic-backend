@@ -13,9 +13,11 @@ const getAllDrives = async (req, res, next) => {
 
 const getDrivesByQuery = async (req, res, next) => {
   try {
-    const { dateFrom, dateTill, id } = req.query;
+    const { dateFrom, dateTill, userId, page, limit } = req.query;
 
-    const idFilter = id ? {owner: id,} : {};
+    const skip = (page - 1) * limit;
+
+    const idFilter = userId ? { owner: userId } : {};
 
     const dateFilter = dateFrom
       ? {
@@ -26,9 +28,16 @@ const getDrivesByQuery = async (req, res, next) => {
     
     const filterOptions = { ...dateFilter, ...idFilter };
 
-    const allDrives = await Drive.find(filterOptions).populate("owner", "name");
+    const allDrives = await Drive.find(filterOptions, "", {
+      skip,
+      limit,
+    })
+      .populate("owner", "name")
+      .sort({ shipmentDate: 1 });
+    
+    const total = await Drive.countDocuments(filterOptions);
 
-    res.status(200).json(allDrives);
+    res.status(200).json({allDrives, total});
   } catch (error) {
     next(error);
   }
