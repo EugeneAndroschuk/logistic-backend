@@ -2,14 +2,14 @@ const { Drive } = require("../models");
 const { drivesJoiSchemas } = require("../schemas");
 const { HttpError } = require("../utils");
 
-const getAllDrives = async (req, res, next) => {
-  try {
-    const allDrives = await Drive.find().populate("owner", "name");
-    res.status(200).json(allDrives);
-  } catch (error) {
-    next(error);
-  }
-};
+// const getAllDrives = async (req, res, next) => {
+//   try {
+//     const allDrives = await Drive.find().populate("owner", "name");
+//     res.status(200).json(allDrives);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 const getDrivesByQuery = async (req, res, next) => {
   try {
@@ -43,13 +43,6 @@ const getDrivesByQuery = async (req, res, next) => {
   }
 };
 
-// db.sales.find({
-//   day: {
-//     $gt: ISODate(" 2020-01-21 "),
-//     $lt: ISODate(" 2020-01-24 "),
-//   },
-// });
-
 const getDriveById = async (req, res, next) => {
   try {
     const { driveId } = req.params;
@@ -69,8 +62,10 @@ const addDrive = async (req, res, next) => {
     const { error } = drivesJoiSchemas.addDriveSchema.validate(req.body);
     if (error) throw HttpError(400, "missing required name field");
 
-    const addedDrive = await Drive.create({ ...req.body, owner: _id });
-    res.status(201).json(addedDrive);
+    await Drive.create({ ...req.body, owner: _id });
+
+    // res.status(201).json(addedDrive);
+    res.status(201).json({message: "Add sucsessful"});
   } catch (error) {
     next(error);
   }
@@ -82,7 +77,8 @@ const removeDriveById = async (req, res, next) => {
     const removedDrive = await Drive.findByIdAndDelete(driveId);
     if (!removedDrive) throw HttpError(404, "Not found");
 
-    res.status(200).json(removedDrive);
+    // res.status(200).json(removedDrive);
+    res.status(200).json({message: "Remove sucsessful"});
   } catch (error) {
     next(error);
   }
@@ -100,14 +96,14 @@ const updateDriveById = async (req, res, next) => {
     });
     if (!updatedDrive) throw HttpError(404, "Not found");
 
-    res.status(200).json(updatedDrive);
+    // res.status(200).json(updatedDrive);
+    res.status(200).json({message: "Udate sucsessful!"});
   } catch (error) {
     next(error);
   }
 };
 
 module.exports = {
-  getAllDrives,
   getDrivesByQuery,
   getDriveById,
   addDrive,
