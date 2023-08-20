@@ -6,12 +6,12 @@ const router = express.Router();
 
 router.get("/", authenticate, ctrlDrives.getDrivesByQuery);
 
-router.get("/:driveId", authenticate, isValidId, ctrlDrives.getDriveById);
+router.get("/:id", authenticate, isValidId, ctrlDrives.getDriveById);
 
 router.post("/", authenticate, ctrlDrives.addDrive);
 
-router.delete("/:driveId", authenticate, isValidId, ctrlDrives.removeDriveById);
+router.delete("/:id", authenticate, isValidId, ctrlDrives.removeDriveById);
 
-router.put("/:driveId", authenticate, isValidId, ctrlDrives.updateDriveById);
+router.put("/:id", authenticate, isValidId, ctrlDrives.updateDriveById);
 
 module.exports = router;

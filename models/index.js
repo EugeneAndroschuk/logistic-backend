@@ -1,9 +1,9 @@
 const User = require("./user");
-const Contact = require("./contact");
-const Drive = require("./drive")
+const Drive = require("./drive");
+const Client = require("./client");
 
 module.exports = {
-    User,
-    Contact,
-    Drive,
-}
+  User,
+  Drive,
+  Client,
+};

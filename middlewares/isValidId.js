@@ -2,8 +2,8 @@ const { isValidObjectId } = require('mongoose');
 const {HttpError} = require('../utils');
 
 const isValidId = (req, res, next) => {
-    const { driveId } = req.params;
-    if (!isValidObjectId(driveId)) next(HttpError(400, `${driveId} is not valid, please enter correct id`));
+    const { id } = req.params;
+    if (!isValidObjectId(id)) next(HttpError(400, `${id} is not valid, please enter correct id`));
     
     next();
 }
