@@ -76,6 +76,7 @@ const addDrive = async (req, res, next) => {
 const removeDriveById = async (req, res, next) => {
   try {
     const { id } = req.params;
+    console.log(id)
     const removedDrive = await Drive.findByIdAndDelete(id);
     if (!removedDrive) throw HttpError(404, "Not found");
 

@@ -6,16 +6,25 @@ const getClientsByQuery = async (req, res, next) => {
   try {
     const { page, limit } = req.query;
 
-    const skip = (page - 1) * limit;
-
     const filterOptions = {};
+    
+    let allClients = []; 
 
-    const allClients = await Client.find(filterOptions, "", {
-      skip,
-      limit,
-    })
-      .populate("owner", "name")
-      .sort({ name: 1 });
+    if (page && limit) {
+      const skip = (page - 1) * limit;
+
+      allClients = await Client.find(filterOptions, "", {
+        skip,
+        limit,
+      })
+        .populate("owner", "name")
+        .sort({ name: 1 });
+      
+    } else {
+      allClients = await Client.find(filterOptions)
+        .populate("owner", "name")
+        .sort({ name: 1 });
+    }
 
     const total = await Client.countDocuments(filterOptions);
 
