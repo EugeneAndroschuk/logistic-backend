@@ -35,6 +35,50 @@ const driveSchema = new Schema(
       type: String,
       required: [true, "Set vehicleData"],
     },
+    driverName: {
+      type: String,
+      required: [true, "Set driverName"],
+    },
+    driverPhone: {
+      type: String,
+      required: [true, "Set driverPhone"],
+    },
+    truckNumber: {
+      type: String,
+      required: [true, "Set truckNumber"],
+    },
+    crossingPoint: {
+      type: String,
+      required: [true, "Set crossingPoint"],
+    },
+    cmrData: {
+      type: String,
+      required: [true, "Set cmrData"],
+    },
+    cargoWeight: {
+      type: String,
+      required: [true, "Set cargoWeight"],
+    },
+    goodsDescription: {
+      type: String,
+      required: [true, "Set goodsDescription"],
+    },
+    carrierCost: {
+      type: Number,
+      required: [true, "Set carrierCost"],
+    },
+    clientCost: {
+      type: Number,
+      required: [true, "Set clientCost"],
+    },
+    clientVat: {
+      type: Number,
+      required: [true, "Set goodsDescription"],
+    },
+    clientTotalCost: {
+      type: Number,
+      required: [true, "Set clientTotalCost"],
+    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",
