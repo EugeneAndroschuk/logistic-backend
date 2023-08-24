@@ -37,7 +37,7 @@ const getDrivesByQuery = async (req, res, next) => {
     
     const total = await Drive.countDocuments(filterOptions);
 
-    res.status(200).json({allDrives, total});
+    res.status(200).json({ total, allDrives });
   } catch (error) {
     next(error);
   }
@@ -49,7 +49,7 @@ const getDriveById = async (req, res, next) => {
     const driveById = await Drive.findById(id);
     if (!id) throw HttpError(404, "Not Found");
 
-    res.status(200).json(driveById);
+    res.status(200).json([driveById]);
   } catch (error) {
     next(error);
   }
