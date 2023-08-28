@@ -1,3 +1,4 @@
+const axios = require("axios");
 const { Drive } = require("../models");
 const { drivesJoiSchemas } = require("../schemas");
 const { HttpError } = require("../utils");
@@ -22,10 +23,10 @@ const getDrivesByQuery = async (req, res, next) => {
     const dateFilter = dateFrom
       ? {
           shipmentDate: { $gte: new Date(dateFrom).toISOString() },
-        unloadingDate: { $lte: new Date(dateTill).toISOString() },
+          unloadingDate: { $lte: new Date(dateTill).toISOString() },
         }
       : {};
-    
+
     const filterOptions = { ...dateFilter, ...idFilter };
 
     const allDrives = await Drive.find(filterOptions, "", {
@@ -34,7 +35,7 @@ const getDrivesByQuery = async (req, res, next) => {
     })
       .populate("owner", "name")
       .sort({ shipmentDate: 1 });
-    
+
     const total = await Drive.countDocuments(filterOptions);
 
     res.status(200).json({ total, allDrives });
@@ -67,7 +68,7 @@ const addDrive = async (req, res, next) => {
     await Drive.create({ ...req.body, owner: _id });
 
     // res.status(201).json(addedDrive);
-    res.status(201).json({message: "Add sucsessful"});
+    res.status(201).json({ message: "Add sucsessful" });
   } catch (error) {
     next(error);
   }
@@ -80,7 +81,7 @@ const removeDriveById = async (req, res, next) => {
     if (!removedDrive) throw HttpError(404, "Not found");
 
     // res.status(200).json(removedDrive);
-    res.status(200).json({message: "Remove sucsessful"});
+    res.status(200).json({ message: "Remove sucsessful" });
   } catch (error) {
     next(error);
   }
@@ -99,7 +100,26 @@ const updateDriveById = async (req, res, next) => {
     if (!updatedDrive) throw HttpError(404, "Not found");
 
     // res.status(200).json(updatedDrive);
-    res.status(200).json({message: "Udate sucsessful!"});
+    res.status(200).json({ message: "Udate sucsessful!" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getCity = async (req, res, next) => {
+  try {
+    const { city } = req.query;
+    const {data} = await axios.get(
+      `https://api.lardi-trans.com/v2/references/towns/by/name?language=uk&query=${city}&limit=10`,
+      {
+        headers: {
+          Authorization: "2VYL3JJIVGO000003374",
+          Accept: "application/json",
+        },
+      }
+    );
+
+    res.status(200).json(data);
   } catch (error) {
     next(error);
   }
@@ -111,4 +131,5 @@ module.exports = {
   addDrive,
   removeDriveById,
   updateDriveById,
+  getCity,
 };

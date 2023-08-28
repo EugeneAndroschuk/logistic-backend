@@ -4,9 +4,13 @@ const { isValidId, authenticate } = require("../../middlewares");
 
 const router = express.Router();
 
+router.get("/findcity", ctrlDrives.getCity);
+
 router.get("/", authenticate, ctrlDrives.getDrivesByQuery);
 
 router.get("/:id", authenticate, isValidId, ctrlDrives.getDriveById);
+
+
 
 router.post("/", authenticate, ctrlDrives.addDrive);
 
