@@ -28,7 +28,7 @@ const getClientsByQuery = async (req, res, next) => {
 
     const total = await Client.countDocuments(filterOptions);
 
-    res.status(200).json({ allClients, total });
+    res.status(200).json({ total, allClients });
   } catch (error) {
     next(error);
   }
@@ -67,6 +67,7 @@ const addClient = async (req, res, next) => {
 const removeClientById = async (req, res, next) => {
   try {
     const { id } = req.params;
+
     const removedClient = await Client.findByIdAndDelete(id);
     if (!removedClient) throw HttpError(404, "Not found");
 
