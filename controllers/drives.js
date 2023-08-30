@@ -109,7 +109,7 @@ const updateDriveById = async (req, res, next) => {
 const getCity = async (req, res, next) => {
   try {
     const { city } = req.query;
-    const {data} = await axios.get(
+    const response = await axios.get(
       `https://api.lardi-trans.com/v2/references/towns/by/name?language=uk&query=${city}&limit=10`,
       {
         headers: {
@@ -119,9 +119,10 @@ const getCity = async (req, res, next) => {
       }
     );
 
-    res.status(200).json(data);
+    if(response.data) res.status(200).json(response.data);
+
   } catch (error) {
-    next(error);
+    if(error.code === 'ETIMEDOUT') res.status(200).json([]); else next(error);
   }
 };
 
