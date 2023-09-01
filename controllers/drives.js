@@ -2,6 +2,9 @@ const axios = require("axios");
 const { Drive } = require("../models");
 const { drivesJoiSchemas } = require("../schemas");
 const { HttpError } = require("../utils");
+require("dotenv").config();
+
+const { LARDI_TRANS_KEY } = process.env;
 
 // const getAllDrives = async (req, res, next) => {
 //   try {
@@ -113,7 +116,7 @@ const getCity = async (req, res, next) => {
       `https://api.lardi-trans.com/v2/references/towns/by/name?language=uk&query=${city}&limit=10`,
       {
         headers: {
-          Authorization: "2VYL3JJIVGO000003374",
+          Authorization: LARDI_TRANS_KEY,
           Accept: "application/json",
         },
       }
