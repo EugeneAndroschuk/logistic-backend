@@ -5,7 +5,7 @@ const addDriveSchema = Joi.object({
   unloadingDate: Joi.date().min("1-1-2022").max(new Date()).required(),
   carrier: Joi.string().required(),
   client: Joi.string().required(),
-  departurePoint: Joi.string().required(),
+  departurePoint: Joi.object().required(),
   arrivalPoint: Joi.string().required(),
   vehicleData: Joi.string().required(),
   driverName: Joi.string().required(),

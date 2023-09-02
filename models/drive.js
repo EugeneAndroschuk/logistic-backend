@@ -23,9 +23,12 @@ const driveSchema = new Schema(
       type: String,
       required: [true, "Set client"],
     },
+    // departurePoint: {
+    //   type: Object,
+    //   required: [true, "Set departurePoint"],
+    // },
     departurePoint: {
-      type: String,
-      required: [true, "Set departurePoint"],
+      type: { name: String, lat: Number, lng: Number },
     },
     arrivalPoint: {
       type: String,
