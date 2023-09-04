@@ -13,6 +13,8 @@ const googleAuth = (req, res) => {
   console.log("send to front ============")
   const url = `${FRONTEND_URL_DEPLOY}/auth?token=${req.user.token}`;
 
+  console.log("url=============", url);
+
   res.redirect(url);
 };
 
