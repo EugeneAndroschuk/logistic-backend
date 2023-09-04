@@ -11,7 +11,7 @@ const { JWT_SECRET, FRONTEND_URL_LOCALHOST, FRONTEND_URL_DEPLOY } =
 
 const googleAuth = (req, res) => {
   console.log("send to front ============")
-  const url = `${FRONTEND_URL_LOCALHOST}/auth?token=${req.user.token}`;
+  const url = `${FRONTEND_URL_DEPLOY}/auth?token=${req.user.token}`;
 
   console.log("url=============", FRONTEND_URL_DEPLOY);
 
