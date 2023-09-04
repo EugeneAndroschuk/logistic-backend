@@ -111,6 +111,7 @@ const updateDriveById = async (req, res, next) => {
 
 const getCity = async (req, res, next) => {
   try {
+    console.log("пришел запрос", req.query);
     const { city } = req.query;
     const response = await axios.get(
       `https://api.lardi-trans.com/v2/references/towns/by/name?language=uk&query=${city}&limit=10`,
