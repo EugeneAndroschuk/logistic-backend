@@ -33,6 +33,7 @@ module.exports = (passport) => {
               },
               { new: true }
             );
+            console.log("user updated================")
 
             return done(null, updatedUser);
             }
