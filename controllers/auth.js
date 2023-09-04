@@ -10,6 +10,7 @@ const { JWT_SECRET, FRONTEND_URL_LOCALHOST, FRONTEND_URL_DEPLOY } =
   process.env;
 
 const googleAuth = (req, res) => {
+  console.log("send to front ============")
   const url = `${FRONTEND_URL_DEPLOY}/auth?token=${req.user.token}`;
 
   res.redirect(url);
