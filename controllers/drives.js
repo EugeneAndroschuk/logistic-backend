@@ -122,6 +122,9 @@ const getCity = async (req, res, next) => {
       }
     );
 
+    console.log(response);
+    console.log(response.data)
+
     if(response.data) res.status(200).json(response.data);
 
   } catch (error) {
