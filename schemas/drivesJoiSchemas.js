@@ -6,7 +6,7 @@ const addDriveSchema = Joi.object({
   carrier: Joi.string().required(),
   client: Joi.string().required(),
   departurePoint: Joi.object().required(),
-  arrivalPoint: Joi.string().required(),
+  arrivalPoint: Joi.object().required(),
   vehicleData: Joi.string().required(),
   driverName: Joi.string().required(),
   driverPhone: Joi.string().required(),

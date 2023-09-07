@@ -31,8 +31,7 @@ const driveSchema = new Schema(
       type: { name: String, lat: Number, lng: Number },
     },
     arrivalPoint: {
-      type: String,
-      required: [true, "Set arrivalPoint"],
+      type: { name: String, lat: Number, lng: Number },
     },
     vehicleData: {
       type: String,
